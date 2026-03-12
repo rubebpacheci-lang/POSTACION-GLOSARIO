@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glosario Técnico — Instalación de Postación Metálica</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Barlow+Condensed:wght@300;400;600;700;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:       #0a0f1a;
+    --panel:    #0f1825;
+    --panel2:   #111d2e;
+    --border:   #1e3a5f;
+    --accent:   #00aaff;
+    --accent2:  #f0a500;
+    --accent3:  #00e5aa;
+    --danger:   #ff4444;
+    --text:     #c8d8e8;
+    --dim:      #5a7a9a;
+    --white:    #e8f4ff;
+    --mono:     'Share Tech Mono', monospace;
+    --cond:     'Barlow Condensed', sans-serif;
+    --body:     'Barlow', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  /* ── Blueprint grid overlay ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image:
+      linear-gradient(rgba(0,170,255,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,170,255,0.035) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 32px 28px 60px;
+  }
+
+  /* ── HEADER ── */
+  header {
+    border: 1px solid var(--border);
+    border-bottom: 3px solid var(--accent);
+    background: var(--panel);
+    padding: 28px 36px;
+    margin-bottom: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent3));
+  }
+  header::after {
+    content: 'GLOSARIO TÉCNICO v1.0';
+    position: absolute;
+    right: 36px; top: 50%;
+    transform: translateY(-50%);
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--dim);
+    letter-spacing: 3px;
+  }
+  .header-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  header h1 {
+    font-family: var(--cond);
+    font-size: clamp(28px, 5vw, 52px);
+    font-weight: 900;
+    color: var(--white);
+    letter-spacing: 1px;
+    line-height: 1.1;
+  }
+  header h1 span { color: var(--accent); }
+  header p {
+    font-size: 14px;
+    color: var(--dim);
+    margin-top: 8px;
+    font-family: var(--mono);
+    letter-spacing: 1px;
+  }
+
+  /* ── SECTION LABEL ── */
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 32px 0 16px;
+  }
+  .section-label .num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    background: rgba(0,170,255,0.08);
+    border: 1px solid var(--accent);
+    padding: 3px 10px;
+    letter-spacing: 2px;
+  }
+  .section-label h2 {
+    font-family: var(--cond);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .section-label .line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--border), transparent);
+  }
+
+  /* ── TERM CARDS GRID ── */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 14px;
+  }
+  .cards-grid.wide {
+    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+  }
+
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    padding: 0;
+    position: relative;
+    transition: border-color 0.2s, background 0.2s;
+    overflow: hidden;
+  }
+  .card:hover {
+    background: var(--panel2);
+    border-left-color: var(--accent2);
+  }
+  .card::before {
+    content: attr(data-num);
+    position: absolute;
+    top: 10px; right: 14px;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--border);
+    letter-spacing: 2px;
+  }
+
+  .card-inner { padding: 16px 20px 16px 18px; }
+
+  .card .term {
+    font-family: var(--cond);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: 1px;
+    margin-bottom: 2px;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .card .term .abbr {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    background: rgba(0,170,255,0.1);
+    border: 1px solid rgba(0,170,255,0.3);
+    padding: 1px 7px;
+    letter-spacing: 2px;
+  }
+  .card .def {
+    font-size: 13.5px;
+    color: var(--text);
+    line-height: 1.6;
+    margin-top: 6px;
+  }
+  .card .unit {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent3);
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(30,58,95,0.6);
+  }
+  .card .unit::before { content: '→ '; }
+
+  /* Color variants */
+  .card.orange  { border-left-color: var(--accent2); }
+  .card.green   { border-left-color: var(--accent3); }
+  .card.red     { border-left-color: var(--danger); }
+  .card.orange:hover { border-left-color: var(--accent); }
+
+  /* ── BIG DIAGRAM PANEL ── */
+  .diagram-panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    margin-bottom: 14px;
+    overflow: hidden;
+  }
+  .diagram-header {
+    background: rgba(0,170,255,0.06);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 20px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 3px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .diagram-header span { color: var(--dim); }
+
+  .diagram-body {
+    padding: 24px 28px;
+    display: flex;
+    gap: 32px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  /* ── SVG DIAGRAMS ── */
+  svg.pole-diagram { flex-shrink: 0; }
+
+  /* ── FORMULA CARDS ── */
+  .formula-strip {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 14px 0;
+  }
+  .formula-card {
+    background: rgba(0,170,255,0.04);
+    border: 1px solid var(--border);
+    border-top: 2px solid var(--accent3);
+    padding: 14px 20px;
+    flex: 1;
+    min-width: 200px;
+  }
+  .formula-card .flabel {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--dim);
+    letter-spacing: 3px;
+    margin-bottom: 6px;
+  }
+  .formula-card .fval {
+    font-family: var(--mono);
+    font-size: 17px;
+    color: var(--accent3);
+    font-weight: bold;
+  }
+  .formula-card .fdesc {
+    font-size: 12px;
+    color: var(--dim);
+    margin-top: 4px;
+  }
+
+  /* ── TABLE ── */
+  .tech-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin: 14px 0;
+  }
+  .tech-table th {
+    font-family: var(--cond);
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: rgba(0,170,255,0.06);
+    border: 1px solid var(--border);
+    padding: 10px 14px;
+    text-align: left;
+  }
+  .tech-table td {
+    border: 1px solid var(--border);
+    padding: 9px 14px;
+    color: var(--text);
+    vertical-align: top;
+  }
+  .tech-table tr:nth-child(even) td { background: rgba(255,255,255,0.015); }
+  .tech-table td.mono { font-family: var(--mono); font-size: 12px; color: var(--accent2); }
+  .tech-table td.em { color: var(--white); font-weight: 500; }
+
+  /* ── WARNING BOX ── */
+  .warn-box {
+    border: 1px solid var(--danger);
+    border-left: 4px solid var(--danger);
+    background: rgba(255,68,68,0.04);
+    padding: 14px 20px;
+    margin: 14px 0;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .warn-box .icon { font-size: 22px; flex-shrink: 0; margin-top: 1px; }
+  .warn-box p { font-size: 13px; line-height: 1.6; color: var(--text); }
+  .warn-box strong { color: var(--danger); }
+
+  /* ── FOOTER ── */
+  footer {
+    margin-top: 48px;
+    border-top: 1px solid var(--border);
+    padding-top: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: gap;
+    gap: 12px;
+  }
+  footer p { font-family: var(--mono); font-size: 10px; color: var(--dim); letter-spacing: 2px; }
+
+  /* ── PRINT ── */
+  @media print {
+    body { background: #fff; color: #000; }
+    body::before { display: none; }
+    .card, .diagram-panel, .formula-card { border-color: #ccc; background: #fafafa; }
+    header { background: #eef4ff; }
+    .term, h1, h2, .section-label h2 { color: #002060; }
+    .def { color: #222; }
+    .abbr { color: #0050a0 !important; }
+  }
+
+  @media (max-width: 700px) {
+    .cards-grid { grid-template-columns: 1fr; }
+    header::after { display: none; }
+    .diagram-body { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-tag">// DOCUMENTO TÉCNICO DE REFERENCIA — INGENIERÍA CIVIL</div>
+    <h1>GLOSARIO DE <span>POSTACIÓN</span> METÁLICA</h1>
+    <h1 style="font-size:clamp(16px,2.5vw,26px);font-weight:300;color:var(--dim);margin-top:4px;">Nomenclatura y Términos de Mecánica de Suelos e Instalación de Postes</h1>
+    <p>PROYECTO: Cámaras de Seguridad — Corredor R.M. Chile &nbsp;|&nbsp; Rev.1 / 2025</p>
+  </header>
+
+
+  <!-- ══ SECCIÓN 1: EL POSTE ══ -->
+  <div class="section-label">
+    <div class="num">01</div>
+    <h2>Componentes del Poste</h2>
+    <div class="line"></div>
+  </div>
+
+  <!-- Diagram + legend -->
+  <div class="diagram-panel">
+    <div class="diagram-header">
+      DIAGRAMA — VISTA DE ELEVACIÓN POSTE METÁLICO GALVANIZADO
+      <span>ESC. REFERENCIAL</span>
+    </div>
+    <div class="diagram-body">
+
+      <!-- SVG Pole Diagram -->
+      <svg class="pole-diagram" width="220" height="480" viewBox="0 0 220 480">
+        <!-- Ground -->
+        <rect x="0" y="310" width="220" height="170" fill="#1a1208" opacity="0.6"/>
+        <line x1="0" y1="310" x2="220" y2="310" stroke="#8B6914" stroke-width="2.5"/>
+        <!-- Ground hatch -->
+        <g stroke="#5a4010" stroke-width="0.8" opacity="0.5">
+          <line x1="10" y1="315" x2="0"   y2="325"/><line x1="26" y1="315" x2="10"  y2="331"/>
+          <line x1="42" y1="315" x2="26"  y2="331"/><line x1="58" y1="315" x2="42"  y2="331"/>
+          <line x1="74" y1="315" x2="58"  y2="331"/><line x1="90" y1="315" x2="74"  y2="331"/>
+          <line x1="106" y1="315" x2="90" y2="331"/><line x1="122" y1="315" x2="106" y2="331"/>
+          <line x1="138" y1="315" x2="122" y2="331"/><line x1="154" y1="315" x2="138" y2="331"/>
+          <line x1="170" y1="315" x2="154" y2="331"/><line x1="186" y1="315" x2="170" y2="331"/>
+          <line x1="202" y1="315" x2="186" y2="331"/><line x1="218" y1="315" x2="202" y2="331"/>
+        </g>
+        <!-- GL label -->
+        <text x="2" y="307" fill="#8B6914" font-family="'Share Tech Mono',monospace" font-size="9" letter-spacing="1">NPT ±0.00</text>
+
+        <!-- Foundation -->
+        <rect x="42" y="315" width="136" height="140" fill="#2a2520" stroke="#00aaff" stroke-width="1" opacity="0.9"/>
+        <!-- Concrete hatch -->
+        <g stroke="#3a3530" stroke-width="0.6">
+          <line x1="42" y1="330" x2="70"  y2="315"/><line x1="42" y1="350" x2="92"  y2="315"/>
+          <line x1="42" y1="370" x2="112" y2="315"/><line x1="42" y1="390" x2="132" y2="315"/>
+          <line x1="42" y1="410" x2="152" y2="315"/><line x1="42" y1="430" x2="172" y2="315"/>
+          <line x1="42" y1="450" x2="178" y2="323"/><line x1="60" y1="455" x2="178" y2="343"/>
+          <line x1="80" y1="455" x2="178" y2="363"/><line x1="100" y1="455" x2="178" y2="383"/>
+          <line x1="120" y1="455" x2="178" y2="403"/><line x1="140" y1="455" x2="178" y2="423"/>
+          <line x1="160" y1="455" x2="178" y2="443"/>
+        </g>
+        <!-- Rebars vertical -->
+        <line x1="62"  y1="320" x2="62"  y2="450" stroke="#cc4400" stroke-width="3"/>
+        <line x1="82"  y1="320" x2="82"  y2="450" stroke="#cc4400" stroke-width="3"/>
+        <line x1="138" y1="320" x2="138" y2="450" stroke="#cc4400" stroke-width="3"/>
+        <line x1="158" y1="320" x2="158" y2="450" stroke="#cc4400" stroke-width="3"/>
+        <!-- Stirrups -->
+        <rect x="55" y="335" width="110" height="0" stroke="#cc6600" stroke-width="2" fill="none"/>
+        <rect x="55" y="360" width="110" height="0" stroke="#cc6600" stroke-width="2" fill="none"/>
+        <rect x="55" y="385" width="110" height="0" stroke="#cc6600" stroke-width="2" fill="none"/>
+        <rect x="55" y="410" width="110" height="0" stroke="#cc6600" stroke-width="2" fill="none"/>
+        <rect x="55" y="435" width="110" height="0" stroke="#cc6600" stroke-width="2" fill="none"/>
+        <!-- Bottom leveling -->
+        <rect x="43" y="448" width="134" height="6" fill="#1a1612" stroke="#555" stroke-width="0.5"/>
+
+        <!-- Anchor bolts above ground -->
+        <rect x="92"  y="278" width="6" height="42" fill="#8B7020" stroke="#666" stroke-width="0.5"/>
+        <rect x="122" y="278" width="6" height="42" fill="#8B7020" stroke="#666" stroke-width="0.5"/>
+
+        <!-- Base plate -->
+        <rect x="72" y="305" width="76" height="10" fill="#2a3a50" stroke="#00aaff" stroke-width="1.2"/>
+
+        <!-- Pole body (tapered) -->
+        <polygon points="96,30 124,30 130,308 90,308" fill="#2a4060" stroke="#4a7aaa" stroke-width="1.2"/>
+        <!-- Pole highlight -->
+        <polygon points="96,30 104,30 107,308 97,308" fill="#3a5575" opacity="0.6"/>
+        <!-- Cable conduit -->
+        <line x1="110" y1="50" x2="110" y2="305" stroke="#f0a500" stroke-width="2.5" stroke-dasharray="6,4"/>
+
+        <!-- Pole cap -->
+        <rect x="92" y="18" width="36" height="14" rx="2" fill="#1a2a40" stroke="#4a7aaa" stroke-width="1"/>
+
+        <!-- Camera arm -->
+        <rect x="124" y="68" width="60" height="10" fill="#1a2a40" stroke="#4a7aaa" stroke-width="1"/>
+        <!-- Camera body -->
+        <rect x="180" y="58" width="36" height="30" rx="3" fill="#111820" stroke="#4a7aaa" stroke-width="1.2"/>
+        <ellipse cx="193" cy="73" rx="7" ry="7" fill="#050810" stroke="#2a5a8a" stroke-width="1"/>
+        <ellipse cx="193" cy="73" rx="4" ry="4" fill="#000520"/>
+
+        <!-- LABELS with lines -->
+        <!-- Fuste del poste -->
+        <line x1="90" y1="160" x2="30" y2="160" stroke="#00aaff" stroke-width="0.8" stroke-dasharray="3,2"/>
+        <text x="28" y="157" fill="#00aaff" font-family="'Share Tech Mono',monospace" font-size="8.5" text-anchor="end">FUSTE</text>
+
+        <!-- Cámara -->
+        <line x1="216" y1="73" x2="180" y2="73" stroke="#00e5aa" stroke-width="0.8"/>
+        <text x="218" y="70" fill="#00e5aa" font-family="'Share Tech Mono',monospace" font-size="8.5">CÁMARA</text>
+
+        <!-- Brazo -->
+        <line x1="155" y1="65" x2="155" y2="48" stroke="#00e5aa" stroke-width="0.8"/>
+        <text x="148" y="44" fill="#00e5aa" font-family="'Share Tech Mono',monospace" font-size="8.5" text-anchor="middle">BRAZO</text>
+
+        <!-- Placa base -->
+        <line x1="148" y1="310" x2="175" y2="296" stroke="#f0a500" stroke-width="0.8"/>
+        <text x="177" y="296" fill="#f0a500" font-family="'Share Tech Mono',monospace" font-size="8.5">PLACA BASE</text>
+
+        <!-- Pernos -->
+        <line x1="95" y1="285" x2="75" y2="270" stroke="#f0a500" stroke-width="0.8"/>
+        <text x="5" y="270" fill="#f0a500" font-family="'Share Tech Mono',monospace" font-size="8.5">PERNOS</text>
+        <text x="5" y="280" fill="#f0a500" font-family="'Share Tech Mono',monospace" font-size="8.5">ANCLAJE</text>
+
+        <!-- Canalización -->
+        <text x="113" y="185" fill="#f0a500" font-family="'Share Tech Mono',monospace" font-size="8" transform="rotate(-90,113,185)">CANALIZ.</text>
+
+        <!-- Foundation labels -->
+        <line x1="100" y1="395" x2="30" y2="410" stroke="#cc4400" stroke-width="0.8"/>
+        <text x="2"  y="408" fill="#cc4400" font-family="'Share Tech Mono',monospace" font-size="8.5">ARMADURA</text>
+        <text x="2"  y="418" fill="#cc4400" font-family="'Share Tech Mono',monospace" font-size="8.5">CANASTILLO</text>
+
+        <line x1="110" y1="455" x2="110" y2="470" stroke="#888" stroke-width="0.8"/>
+        <text x="40" y="480" fill="#888" font-family="'Share Tech Mono',monospace" font-size="8.5">FUNDACIÓN / ZAPATA</text>
+
+        <!-- Height dimension -->
+        <line x1="25" y1="30" x2="25" y2="308" stroke="#5a7a9a" stroke-width="0.8"/>
+        <line x1="21" y1="30"  x2="29" y2="30"  stroke="#5a7a9a" stroke-width="0.8"/>
+        <line x1="21" y1="308" x2="29" y2="308" stroke="#5a7a9a" stroke-width="0.8"/>
+        <polygon points="25,30 22,38 28,38" fill="#5a7a9a"/>
+        <polygon points="25,308 22,300 28,300" fill="#5a7a9a"/>
+        <text x="15" y="175" fill="#5a7a9a" font-family="'Share Tech Mono',monospace" font-size="9" text-anchor="middle" transform="rotate(-90,15,175)">ALTURA LIBRE</text>
+      </svg>
+
+      <!-- Term list next to diagram -->
+      <div style="flex:1;min-width:260px">
+        <table class="tech-table">
+          <thead><tr><th>Componente</th><th>Descripción técnica</th></tr></thead>
+          <tbody>
+            <tr><td class="em">Fuste del poste</td><td>Cuerpo principal tubular del poste, generalmente de sección circular o cónica. Puede ser de una pieza o tramos empatillados.</td></tr>
+            <tr><td class="em">Empatillado</td><td>Unión telescópica entre tramos del poste mediante encaje macho-hembra soldado o con pernos pasantes.</td></tr>
+            <tr><td class="em">Placa base</td><td>Plancha de acero soldada en la base del poste. Distribuye las cargas hacia los pernos de anclaje y la fundación.</td></tr>
+            <tr><td class="em">Pernos de anclaje</td><td>Varillas roscadas embebidas en el hormigón de la fundación que fijan la placa base al dado de concreto.</td></tr>
+            <tr><td class="em">Brazo (ménsula)</td><td>Perfil horizontal soldado al fuste para proyectar la cámara fuera del eje del poste, mejorando el ángulo de cobertura.</td></tr>
+            <tr><td class="em">Canalización</td><td>Tubo corrugado o conduit metálico por donde pasa el cableado de alimentación y datos, protegido de la intemperie.</td></tr>
+            <tr><td class="em">Galvanizado en caliente</td><td>Recubrimiento de zinc aplicado a alta temperatura (~450°C) que protege el acero de la corrosión. Espesor mínimo 85 µm.</td></tr>
+            <tr><td class="em">Altura libre</td><td>Distancia vertical desde el nivel de piso terminado (NPT) hasta la punta del poste o la cámara.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══ SECCIÓN 2: FUNDACIÓN ══ -->
+  <div class="section-label">
+    <div class="num">02</div>
+    <h2>Fundación y Hormigón</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="cards-grid">
+
+    <div class="card" data-num="FND-01">
+      <div class="card-inner">
+        <div class="term">Zapata de hormigón armado <span class="abbr">H°A°</span></div>
+        <div class="def">Bloque de hormigón reforzado con barras de acero que transmite las cargas del poste al terreno. Es el tipo de fundación estándar para postación metálica. Sus dimensiones (largo × ancho × profundidad) varían según la altura del poste y la capacidad del suelo.</div>
+        <div class="unit">Unidad de dimensión: metros (m). Ejemplo: 0.80 × 0.80 × 1.20 m</div>
+      </div>
+    </div>
+
+    <div class="card orange" data-num="FND-02">
+      <div class="card-inner">
+        <div class="term">Dado de fundación</div>
+        <div class="def">Nombre coloquial de la zapata. También llamado "bloque de anclaje". Es el cuerpo de hormigón donde se embeben los pernos de anclaje y que resiste los momentos volcantes generados por el viento sobre el poste.</div>
+        <div class="unit">Sinónimos: dado, macizo, bloque de hormigón</div>
+      </div>
+    </div>
+
+    <div class="card" data-num="FND-03">
+      <div class="card-inner">
+        <div class="term">Resistencia a la compresión <span class="abbr">f'c</span></div>
+        <div class="def">Capacidad del hormigón para soportar cargas de aplastamiento, medida a los 28 días de curado. Se expresa en kg/cm² o MPa. Un hormigón H-20 significa f'c = 200 kg/cm². A mayor altura de poste, se requiere mayor resistencia.</div>
+        <div class="unit">Unidad: kg/cm² o MPa — 1 MPa = 10.2 kg/cm²</div>
+      </div>
+    </div>
+
+    <div class="card orange" data-num="FND-04">
+      <div class="card-inner">
+        <div class="term">Vibrado del hormigón</div>
+        <div class="def">Proceso de compactación del hormigón fresco con un vibrador mecánico de aguja para eliminar burbujas de aire atrapadas y "cangrejeras" (cavidades internas). Es obligatorio para garantizar la resistencia especificada.</div>
+        <div class="unit">Herramienta: vibrador de inmersión (aguja vibratoria)</div>
+      </div>
+    </div>
+
+    <div class="card green" data-num="FND-05">
+      <div class="card-inner">
+        <div class="term">Curado del hormigón</div>
+        <div class="def">Proceso de mantener el hormigón húmedo tras el vaciado para que reaccione correctamente el cemento (hidratación). Sin curado adecuado la resistencia puede bajar hasta un 40%. El mínimo es 7 días con agua o membrana de curado.</div>
+        <div class="unit">Mínimo recomendado: 7 días húmedo antes de carga</div>
+      </div>
+    </div>
+
+    <div class="card" data-num="FND-06">
+      <div class="card-inner">
+        <div class="term">Recubrimiento de armadura</div>
+        <div class="def">Espesor mínimo de hormigón entre la superficie exterior y la barra de acero interior. Protege el acero de la corrosión y el fuego. Para fundaciones expuestas a suelo, el mínimo es 5 cm según NCh 170.</div>
+        <div class="unit">Valor mínimo: 50 mm (5 cm) para elementos en contacto con suelo</div>
+      </div>
+    </div>
+
+    <div class="card green" data-num="FND-07">
+      <div class="card-inner">
+        <div class="term">Hormigón de limpieza</div>
+        <div class="def">Capa delgada de hormigón pobre (H-10) de 5–8 cm que se vierte en el fondo de la excavación antes de armar el canastillo. Su función es dar una superficie nivelada, limpia y seca para trabajar, sin contaminar la armadura con tierra.</div>
+        <div class="unit">Espesor: 5 a 8 cm — resistencia H-10 (sin requisito estructural)</div>
+      </div>
+    </div>
+
+    <div class="card orange" data-num="FND-08">
+      <div class="card-inner">
+        <div class="term">Cangrejera</div>
+        <div class="def">Cavidad o vacío interno en el hormigón ya fraguado, causado por mala compactación, exceso de agua o áridos de gran tamaño. Debilita gravemente la fundación y puede causar falla del poste. Se evita con vibrado correcto.</div>
+        <div class="unit">Defecto a evitar — requiere demolición y rehacer la fundación</div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- ══ SECCIÓN 3: ARMADURA ══ -->
+  <div class="section-label">
+    <div class="num">03</div>
+    <h2>Armadura — El Canastillo</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="diagram-panel">
+    <div class="diagram-header">
+      DIAGRAMA — CANASTILLO DE ARMADURA (SECCIÓN TRANSVERSAL)
+      <span>NOMENCLATURA DE BARRAS</span>
+    </div>
+    <div class="diagram-body" style="align-items:center">
+
+      <svg width="260" height="260" viewBox="0 0 260 260">
+        <!-- Concrete section -->
+        <rect x="20" y="20" width="220" height="220" rx="4" fill="#1e1a15" stroke="#00aaff" stroke-width="1.5"/>
+        <!-- Concrete hatch -->
+        <g stroke="#2a2520" stroke-width="0.7">
+          <line x1="20" y1="45"  x2="45"  y2="20"/><line x1="20" y1="75"  x2="75"  y2="20"/>
+          <line x1="20" y1="105" x2="105" y2="20"/><line x1="20" y1="135" x2="135" y2="20"/>
+          <line x1="20" y1="165" x2="165" y2="20"/><line x1="20" y1="195" x2="195" y2="20"/>
+          <line x1="20" y1="225" x2="225" y2="20"/><line x1="20" y1="240" x2="240" y2="20"/>
+          <line x1="35" y1="240" x2="240" y2="35"/><line x1="60" y1="240" x2="240" y2="60"/>
+          <line x1="85" y1="240" x2="240" y2="85"/><line x1="110" y1="240" x2="240" y2="110"/>
+          <line x1="135" y1="240" x2="240" y2="135"/><line x1="160" y1="240" x2="240" y2="160"/>
+          <line x1="185" y1="240" x2="240" y2="185"/><line x1="210" y1="240" x2="240" y2="210"/>
+        </g>
+        <!-- Stirrup (estribo) -->
+        <rect x="48" y="48" width="164" height="164" rx="2" fill="none" stroke="#cc5500" stroke-width="4"/>
+
+        <!-- 4 longitudinal rebars (standard) -->
+        <circle cx="65" cy="65"   r="12" fill="#1e1a15" stroke="#888" stroke-width="1"/>
+        <circle cx="65" cy="65"   r="8"  fill="#cc3300"/>
+        <line x1="58" y1="58" x2="72" y2="72" stroke="#882200" stroke-width="1.5"/>
+        <line x1="72" y1="58" x2="58" y2="72" stroke="#882200" stroke-width="1.5"/>
+
+        <circle cx="195" cy="65"  r="12" fill="#1e1a15" stroke="#888" stroke-width="1"/>
+        <circle cx="195" cy="65"  r="8"  fill="#cc3300"/>
+        <line x1="188" y1="58" x2="202" y2="72" stroke="#882200" stroke-width="1.5"/>
+        <line x1="202" y1="58" x2="188" y2="72" stroke="#882200" stroke-width="1.5"/>
+
+        <circle cx="65"  cy="195" r="12" fill="#1e1a15" stroke="#888" stroke-width="1"/>
+        <circle cx="65"  cy="195" r="8"  fill="#cc3300"/>
+        <line x1="58" y1="188" x2="72" y2="202" stroke="#882200" stroke-width="1.5"/>
+        <line x1="72" y1="188" x2="58" y2="202" stroke="#882200" stroke-width="1.5"/>
+
+        <circle cx="195" cy="195" r="12" fill="#1e1a15" stroke="#888" stroke-width="1"/>
+        <circle cx="195" cy="195" r="8"  fill="#cc3300"/>
+        <line x1="188" y1="188" x2="202" y2="202" stroke="#882200" stroke-width="1.5"/>
+        <line x1="202" y1="188" x2="188" y2="202" stroke="#882200" stroke-width="1.5"/>
+
+        <!-- Extra rebars for 12m pole (center of sides) -->
+        <circle cx="130" cy="65"  r="8" fill="#ff6600" opacity="0.5"/>
+        <circle cx="130" cy="195" r="8" fill="#ff6600" opacity="0.5"/>
+        <text x="118" y="52" fill="#f0a500" font-family="'Share Tech Mono',monospace" font-size="7.5">+6m POSTE</text>
+
+        <!-- Pole tube center -->
+        <circle cx="130" cy="130" r="22" fill="#1a2535" stroke="#4a7aaa" stroke-width="2"/>
+        <circle cx="130" cy="130" r="15" fill="#2a4060" stroke="#3a6090" stroke-width="1"/>
+
+        <!-- Anchor bolts -->
+        <circle cx="115" cy="130" r="5" fill="#8B7020" stroke="#aa9030" stroke-width="1"/>
+        <circle cx="145" cy="130" r="5" fill="#8B7020" stroke="#aa9030" stroke-width="1"/>
+
+        <!-- Cover dim -->
+        <line x1="20" y1="65"  x2="53" y2="65"  stroke="#5a7a9a" stroke-width="0.8"/>
+        <text x="22" y="62" fill="#5a7a9a" font-family="'Share Tech Mono',monospace" font-size="8">recubr.</text>
+        <text x="22" y="73" fill="#5a7a9a" font-family="'Share Tech Mono',monospace" font-size="8">5 cm</text>
+
+        <!-- Labels -->
+        <text x="130" y="255" fill="#cc5500" font-family="'Share Tech Mono',monospace" font-size="8.5" text-anchor="middle">ESTRIBO ∅8mm c/20cm</text>
+        <text x="130" y="15"  fill="#cc3300" font-family="'Share Tech Mono',monospace" font-size="8.5" text-anchor="middle">BARRA LONG. ∅12–20mm</text>
+        <text x="130" y="133" fill="#4a9acc" font-family="'Share Tech Mono',monospace" font-size="7.5" text-anchor="middle">TUBO</text>
+        <text x="130" y="143" fill="#4a9acc" font-family="'Share Tech Mono',monospace" font-size="7.5" text-anchor="middle">POSTE</text>
+      </svg>
+
+      <div style="flex:1;min-width:240px">
+        <table class="tech-table">
+          <thead><tr><th>Término</th><th>Definición</th></tr></thead>
+          <tbody>
+            <tr><td class="em">Canastillo</td><td>Armado de barras de acero (jaula) que se introduce en la excavación antes de vaciar el hormigón. Da resistencia a tracción y momento a la fundación.</td></tr>
+            <tr><td class="em">Barra longitudinal</td><td>Varilla de acero vertical que recorre toda la altura de la fundación. Resiste los esfuerzos de tracción causados por el momento volcante del viento.</td></tr>
+            <tr><td class="em">Estribo (zuncho)</td><td>Aro o grapa horizontal de acero que mantiene las barras longitudinales en su posición y resiste los esfuerzos de corte. Se colocan a intervalos regulares (ej: cada 20 cm).</td></tr>
+            <tr><td class="em">∅ (diámetro)</td><td>Símbolo de diámetro de la barra. "∅12mm" significa barra de 12 milímetros de diámetro. A mayor diámetro, más resistencia y más peso.</td></tr>
+            <tr><td class="em">Separación (paso)</td><td>Distancia entre estribos consecutivos, expresada como "c/20cm" (cada 20 cm). Menor separación = mayor resistencia al corte.</td></tr>
+            <tr><td class="em">Dobladuras y ganchos</td><td>Curvaturas en los extremos de las barras para anclarlas mecánicamente en el hormigón. Las barras no terminan rectas sino con un gancho a 90° o 180°.</td></tr>
+            <tr><td class="em">Acero A44-28H</td><td>Designación chilena del acero de construcción. f'y = 4.400 kg/cm² de límite elástico. Es el estándar para enfierradura estructural según NCh 204.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══ SECCIÓN 4: MECÁNICA DE SUELOS ══ -->
+  <div class="section-label">
+    <div class="num">04</div>
+    <h2>Mecánica de Suelos</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="cards-grid">
+
+    <div class="card" data-num="MS-01">
+      <div class="card-inner">
+        <div class="term">Calicata exploratoria</div>
+        <div class="def">Excavación manual o mecánica de pequeñas dimensiones (aprox. 1×1m) hasta 2–3 m de profundidad para examinar directamente el perfil estratigráfico del suelo, identificar los tipos de material, su compacidad, humedad y posición del nivel freático.</div>
+        <div class="unit">Mínimo recomendado: 1 calicata por punto de poste de altura ≥ 9m</div>
+      </div>
+    </div>
+
+    <div class="card orange" data-num="MS-02">
+      <div class="card-inner">
+        <div class="term">Ensayo SPT <span class="abbr">Standard Penetration Test</span></div>
+        <div class="def">Prueba de penetración estándar que mide la resistencia del suelo golpeando un muestreador con un martinete de 63.5 kg caído desde 76 cm. El resultado N-SPT indica cuántos golpes se necesitan para penetrar 30 cm. A mayor N, suelo más compacto.</div>
+        <div class="unit">Interpretación: N&lt;4=muy blando | N=4–10=blando | N&gt;30=denso/compacto</div>
+      </div>
+    </div>
+
+    <div class="card" data-num="MS-03">
+      <div class="card-inner">
+        <div class="term">Capacidad portante admisible <span class="abbr">q<sub>a</sub></span></div>
+        <div class="def">Carga máxima por unidad de área que puede soportar el suelo sin sufrir falla ni asentamientos excesivos. Se expresa en kN/m² o kg/cm². Para suelos aluviales de la R.M., valores típicos son 100–150 kN/m². Si la fundación supera este valor, el suelo cede.</div>
+        <div class="unit">Unidad: kN/m² o kg/cm² — 1 kg/cm² = 98.1 kN/m²</div>
+      </div>
+    </div>
+
+    <div class="card orange" data-num="MS-04">
+      <div class="card-inner">
+        <div class="term">Estratigrafía del suelo</div>
+        <div class="def">Descripción y clasificación de las capas (estratos) de suelo en profundidad, identificando el tipo de material en cada nivel (relleno, arcilla, arena, grava, roca). Es fundamental para determinar dónde apoyar la fundación de forma segura.</div>
+        <div class="unit">Se determina mediante calicatas, sondajes o ensayos SPT</div>
+      </div>
+    </div>
+
+    <div class="card green" data-num="MS-05">
+      <div class="card-inner">
+        <div class="term">Nivel freático <span class="abbr">NF</span></div>
+        <div class="def">Profundidad a la que se encuentra el agua subterránea. Si el NF está por encima del fondo de la fundación, complica la excavación (se inunda), puede reducir la capacidad portante del suelo y requiere agotamiento con bomba antes de hormigonar.</div>
+        <div class="unit">En R.M. sector Las Vizcachas: NF estimado &gt; 5 m (no condiciona)</div>
+      </div>
+    </div>
+
+    <div class="card" data-num="MS-06">
+      <div class="card-inner">
+        <div class="term">Suelo cohesivo vs. granular</div>
+        <div class="def">Los suelos cohesivos (arcillas) tienen cohesión que los mantiene unidos pero pueden presentar asentamientos diferidos. Los suelos granulares (arenas y gravas) drenan rápido, tienen buena capacidad portante y son ideales para fundaciones de postes.</div>
+        <div class="unit">Sector R.M.: gravas aluviales densas en profundidad = condición favorable</div>
+      </div>
+    </div>
+
+    <div class="card green" data-num="MS-07">
+      <div class="card-inner">
+        <div class="term">Ángulo de fricción interna <span class="abbr">φ</span></div>
+        <div class="def">Parámetro que expresa la resistencia al deslizamiento entre partículas de suelo. Un suelo con φ=35° es más "trabajado" y resistente que uno con φ=20°. Las gravas del sector tienen φ≈28–35°, lo que garantiza buena resistencia al volcamiento de la fundación.</div>
+        <div class="unit">Unidad: grados (°) — arenas: 28–35° | gravas: 35–45°</div>
+      </div>
+    </div>
+
+    <div class="card orange" data-num="MS-08">
+      <div class="card-inner">
+        <div class="term">Relleno antrópico</div>
+        <div class="def">Material depositado por acción humana (escombros, tierra movida en obras, basura compactada). Es heterogéneo, de comportamiento impredecible y baja capacidad portante. En zonas urbanas es común en el primer metro. La fundación debe pasarlo y apoyar en suelo natural.</div>
+        <div class="unit">Acción recomendada: excavar más allá del relleno hasta suelo natural firme</div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- ══ SECCIÓN 5: CARGAS Y CÁLCULO ══ -->
+  <div class="section-label">
+    <div class="num">05</div>
+    <h2>Cargas, Fuerzas y Estabilidad</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="formula-strip">
+    <div class="formula-card">
+      <div class="flabel">MOMENTO VOLCANTE</div>
+      <div class="fval">M = F × h</div>
+      <div class="fdesc">Fuerza de viento (F) multiplicada por la altura del poste (h). A mayor altura, mayor momento en la base.</div>
+    </div>
+    <div class="formula-card">
+      <div class="flabel">PRESIÓN DE VIENTO</div>
+      <div class="fval">q = ½ ρ V²</div>
+      <div class="fdesc">ρ = densidad del aire, V = velocidad del viento. A 130 km/h en R.M. → q ≈ 1.3 kN/m²</div>
+    </div>
+    <div class="formula-card">
+      <div class="flabel">FACTOR DE SEGURIDAD</div>
+      <div class="fval">FS = M<sub>res</sub> / M<sub>volc</sub></div>
+      <div class="fdesc">Cociente entre el momento resistente de la fundación y el volcante del viento. Mínimo FS ≥ 2.5</div>
+    </div>
+    <div class="formula-card">
+      <div class="flabel">CAPACIDAD PORTANTE</div>
+      <div class="fval">q<sub>a</sub> ≥ P / A</div>
+      <div class="fdesc">La presión del peso total del poste sobre el área de fundación no debe superar la capacidad admisible del suelo.</div>
+    </div>
+  </div>
+
+  <div class="cards-grid">
+
+    <div class="card" data-num="CAR-01">
+      <div class="card-inner">
+        <div class="term">Momento volcante <span class="abbr">M<sub>v</sub></span></div>
+        <div class="def">Fuerza giratoria que el viento ejerce en la base del poste intentando tumbarlo. Crece con el cuadrado de la velocidad del viento y con la primera potencia de la altura. Es la carga de diseño crítica para fundaciones de postes altos.</div>
+        <div class="unit">Unidad: kN·m — Poste 6m: 4.7 kN·m | 9m: 9.4 kN·m | 12m: 18.7 kN·m</div>
+      </div>
+    </div>
+
+    <div class="card orange" data-num="CAR-02">
+      <div class="card-inner">
+        <div class="term">Momento resistente <span class="abbr">M<sub>r</sub></span></div>
+        <div class="def">Capacidad de la fundación (y el suelo sobre ella) para oponerse al volcamiento. Depende del peso propio del dado de hormigón, el peso del suelo sobre la fundación y la geometría de la zapata. Debe superar siempre al momento volcante.</div>
+        <div class="unit">Se verifica con factor de seguridad: M<sub>r</sub> / M<sub>v</sub> ≥ 2.5 (o 3.0 para poste de 12m)</div>
+      </div>
+    </div>
+
+    <div class="card green" data-num="CAR-03">
+      <div class="card-inner">
+        <div class="term">Factor de seguridad al volcamiento <span class="abbr">FS</span></div>
+        <div class="def">Relación entre la resistencia al volcamiento y la fuerza que intenta volcarlo. Un FS=2.5 significa que la fundación puede resistir 2.5 veces la carga máxima de diseño antes de fallar. Es obligatorio en toda fundación de postación.</div>
+        <div class="unit">Mínimo normativo: FS ≥ 2.5 (postes ≤9m) | FS ≥ 3.0 (postes 12m)</div>
+      </div>
+    </div>
+
+    <div class="card" data-num="CAR-04">
+      <div class="card-inner">
+        <div class="term">Carga de viento <span class="abbr">W</span></div>
+        <div class="def">Fuerza horizontal que ejerce el viento sobre la superficie proyectada del poste y la cámara. Calculada según NCh 432 considerando velocidad básica de diseño, factor de terreno, área expuesta y coeficiente de forma del elemento.</div>
+        <div class="unit">Vel. diseño R.M.: 130 km/h — Área cámara PTZ: ~0.4 m²</div>
+      </div>
+    </div>
+
+    <div class="card orange" data-num="CAR-05">
+      <div class="card-inner">
+        <div class="term">Torque de apriete</div>
+        <div class="def">Fuerza de giro aplicada con llave dinamométrica a las tuercas de los pernos de anclaje para lograr la tensión de precarga correcta. Un apriete insuficiente puede aflojar el poste; uno excesivo puede partir el perno o el hormigón.</div>
+        <div class="unit">Poste 6m (∅20mm): ≈ 200 N·m | 9m (∅25mm): ≈ 350 N·m | 12m (∅30mm): ≈ 500 N·m</div>
+      </div>
+    </div>
+
+    <div class="card green" data-num="CAR-06">
+      <div class="card-inner">
+        <div class="term">Carga axial (peso propio)</div>
+        <div class="def">Fuerza vertical debida al peso del poste, la cámara y accesorios, que actúa hacia abajo sobre la fundación. Para postes metálicos de 6–12m es relativamente pequeña (200–600 kg) comparada con las cargas de viento, pero debe incluirse en el cálculo.</div>
+        <div class="unit">Unidad: kg o kN — 1 kN ≈ 102 kg</div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- ══ SECCIÓN 6: NORMAS ══ -->
+  <div class="section-label">
+    <div class="num">06</div>
+    <h2>Normativa Aplicable</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="diagram-panel">
+    <div class="diagram-header">MARCO NORMATIVO CHILENO — PROYECTO POSTACIÓN METÁLICA</div>
+    <div class="diagram-body" style="padding:20px 28px">
+      <table class="tech-table" style="width:100%">
+        <thead>
+          <tr><th>Norma</th><th>Nombre</th><th>Aplicación en este proyecto</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="mono">NCh 170</td><td class="em">Hormigón — Requisitos Generales</td><td>Dosificación, colocación, vibrado y curado del hormigón de la zapata de fundación.</td></tr>
+          <tr><td class="mono">NCh 204</td><td class="em">Acero — Barras Laminadas en Caliente</td><td>Especificaciones del acero de refuerzo (fy = 4.400 kg/cm², designación A44-28H).</td></tr>
+          <tr><td class="mono">NCh 432</td><td class="em">Cargas de Viento sobre Estructuras</td><td>Cálculo de presiones y fuerzas de viento sobre postes y cámaras (vel. diseño 130 km/h R.M.).</td></tr>
+          <tr><td class="mono">NCh 433</td><td class="em">Diseño Sísmico de Edificios</td><td>Zonificación sísmica (Zona 2, A0=0.30g) y combinación de cargas para fundaciones.</td></tr>
+          <tr><td class="mono">ASTM A307</td><td class="em">Pernos de Anclaje — Grado A</td><td>Especificación de los pernos de anclaje embebidos en la fundación de hormigón.</td></tr>
+          <tr><td class="mono">ASTM A563</td><td class="em">Tuercas para Pernos de Alta Resistencia</td><td>Tuercas y arandelas para el sistema de anclaje placa base – perno – fundación.</td></tr>
+          <tr><td class="mono">ISO 1461</td><td class="em">Galvanizado por Inmersión en Caliente</td><td>Recubrimiento de zinc del poste metálico: espesor mínimo 85 µm (micrones).</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══ SECCIÓN 7: TÉRMINOS DE PROCESO ══ -->
+  <div class="section-label">
+    <div class="num">07</div>
+    <h2>Términos del Proceso Constructivo</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="cards-grid wide">
+
+    <div class="card" data-num="OBR-01">
+      <div class="card-inner">
+        <div class="term">Replanteo</div>
+        <div class="def">Acto de trasladar al terreno las coordenadas del proyecto, marcando físicamente el punto exacto donde irá la fundación de cada poste. Se realiza con GPS de precisión diferencial y/o estación total. Sin buen replanteo, el poste queda fuera de posición.</div>
+        <div class="unit">Herramienta: GPS RTK (precisión centimétrica) o estación total</div>
+      </div>
+    </div>
+
+    <div class="card orange" data-num="OBR-02">
+      <div class="card-inner">
+        <div class="term">Interferencias subterráneas</div>
+        <div class="def">Redes de servicios (tuberías de agua, gas, ductos eléctricos, fibra óptica) que pueden estar enterradas en el punto de excavación. Deben identificarse ANTES de excavar mediante planos de las empresas de servicios y/o detección con georradar para evitar roturas graves y peligro de vida.</div>
+        <div class="unit">Solicitar a: ENEL, Aguas RM, Metrogas, Entel — antes de excavar</div>
+      </div>
+    </div>
+
+    <div class="card green" data-num="OBR-03">
+      <div class="card-inner">
+        <div class="term">Plomado del poste</div>
+        <div class="def">Verificación y ajuste de la verticalidad del poste una vez izado, antes de apretar definitivamente los pernos de anclaje. Se realiza con nivel láser rotativo o plomada. Un poste fuera de plomo genera esfuerzos adicionales en la fundación y da mal aspecto.</div>
+        <div class="unit">Tolerancia: desplome máximo 1/500 de la altura (por ejemplo: 12mm en un poste de 6m)</div>
+      </div>
+    </div>
+
+    <div class="card" data-num="OBR-04">
+      <div class="card-inner">
+        <div class="term">Izado del poste</div>
+        <div class="def">Operación de levantar y posicionar verticalmente el poste sobre su fundación mediante camión con pluma (camión grúa) o grúa torre. Para postes de 9m y 12m es obligatorio el uso de maquinaria certificada con operador habilitado. Se debe contar con plan de izaje y revisión de eslingas.</div>
+        <div class="unit">Equipos: camión pluma (hasta 10m), grúa hidráulica (12m o más)</div>
+      </div>
+    </div>
+
+    <div class="card orange" data-num="OBR-05">
+      <div class="card-inner">
+        <div class="term">Llave dinamométrica</div>
+        <div class="def">Herramienta de ajuste que indica el torque (fuerza de giro) aplicado a una tuerca, garantizando el apriete correcto. En instalación de postes es obligatoria para apretar los pernos de anclaje al valor especificado en el proyecto, evitando bajo o excesivo apriete.</div>
+        <div class="unit">Unidad de medida: N·m (Newton por metro)</div>
+      </div>
+    </div>
+
+    <div class="card green" data-num="OBR-06">
+      <div class="card-inner">
+        <div class="term">Prueba funcional del sistema</div>
+        <div class="def">Verificación final, luego de la instalación completa (poste, cámara, cableado, alimentación eléctrica), de que el sistema de videovigilancia opera correctamente: imagen, movimiento PTZ, conexión al VMS y grabación. Debe quedar registrada con acta de recepción firmada.</div>
+        <div class="unit">Documentos de entrega: acta de recepción + protocolos de prueba</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- WARNING -->
+  <div class="warn-box" style="margin-top:24px">
+    <div class="icon">⚠</div>
+    <p><strong>ADVERTENCIA CRÍTICA — POSTE DE 12 METROS (P2_2):</strong> Al ser el elemento de mayor altura del proyecto, su instalación exige <strong>estudio geotécnico formal</strong> con calicata y ensayo SPT, <strong>cálculo estructural firmado por ingeniero civil</strong> con título habilitante, y <strong>plan de izaje certificado</strong> antes de cualquier trabajo en terreno. No proceder sin estos documentos. El incumplimiento puede resultar en colapso del poste y responsabilidad civil y penal.</p>
+  </div>
+
+
+  <!-- FOOTER -->
+  <footer>
+    <p>GLOSARIO TÉCNICO — POSTACIÓN METÁLICA CÁMARAS DE SEGURIDAD</p>
+    <p>CORREDOR LAS VIZCACHAS — R.M. CHILE — REV.1 / 2025</p>
+    <p>ELABORADO PARA USO INTERNO DEL PROYECTO</p>
+  </footer>
+
+</div>
+</body>
+</html>
